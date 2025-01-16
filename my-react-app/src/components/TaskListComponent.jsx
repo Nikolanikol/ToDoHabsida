@@ -1,19 +1,41 @@
 
 import TaskComponent from './TaskComponent'
+import {formatDistanceToNow} from 'date-fns'
+import { enUS, ru } from 'date-fns/locale'; // Для русского языка
 
-const TaskListComponent = () => {
+const TaskListComponent = ({tasks, setTasks}) => {
+
+    const handleTaskClick = ()=>{
+        console.log('click')
+    }
   return (
 
     <ul className="todo-list">
-        <TaskComponent className={'completed'} description={'Completed task'} createdTime={'created 17 seconds ago'}></TaskComponent>
-        <TaskComponent className={'editing'} description={'Editing task'} createdTime={'created 5 minutes ago'}>
-            <input type="text" width={200} height={100} className="edit" value="Editing task"/>
-        </TaskComponent>
-        <TaskComponent description={'Active task'} createdTime={'created 5 minutes ago'}></TaskComponent>
+        {
+            tasks.map(task=>{
+                let clasezz = ''
+                if(task.status == true) clasezz = 'completed'
+                if(task.status == 'editing') clasezz = 'editing'
+                return(
+                    <TaskComponent 
+                        setTasks={setTasks} 
+                        id={task.id} 
+                        key={task.id} 
+                        className={clasezz}
+                        description={task.description} 
+                        createdTime={formatDistanceToNow(new Date(task.time))} 
+                        status = {task.status}
+                    >
+
+                    </TaskComponent>
+                )
+            })
+        }
 
     </ul>
 
   )
 }
-
+// completed
+// editing
 export default TaskListComponent
