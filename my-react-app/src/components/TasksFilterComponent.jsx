@@ -1,17 +1,24 @@
 
 
-const TasksFilterComponent = () => {
+const TasksFilterComponent = ({setActiveFilter, activeFilter}) => {
+
+
+    const filtersArr = ['All', 'Active', 'Completed']
+    const handleClick = (item)=>{
+        setActiveFilter(item)
+    }
   return (
     <ul className="filters">
-        <li>
-            <button className="selected">All</button>
-        </li>
-        <li>
-            <button>Active</button>
-        </li>
-        <li>
-            <button>Completed</button>
-        </li>
+        {
+            filtersArr.map((filter,i)=>{
+                return (
+                    <li key={i} onClick={()=>handleClick(filter)}>
+                        <button className={filter ==  activeFilter? "selected" : ''}>{filter}</button>
+                    </li>
+                )
+            })
+        }
+       
     </ul>
   )
 }
